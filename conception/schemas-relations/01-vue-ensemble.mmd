@@ -1,0 +1,97 @@
+erDiagram
+    PERSONNE ||--o{ DEPOT : "fait"
+    PERSONNE ||--o| BENEVOLE : "est aussi"
+    PERSONNE ||--o{ VENTE : "achete lors de"
+    PERSONNE ||--o{ INSCRIPTION : "s inscrit via"
+
+    DEPOT ||--|{ OBJET : "contient"
+    CATEGORIE ||--o{ OBJET : "classe"
+
+    OBJET ||--o{ REPARATION : "subit"
+    BENEVOLE ||--o{ REPARATION : "realise"
+
+    OBJET ||--o| LIGNE_VENTE : "est vendu via"
+    VENTE ||--|{ LIGNE_VENTE : "regroupe"
+
+    BENEVOLE ||--o{ BENEVOLE_COMPETENCE : "possede"
+    COMPETENCE ||--o{ BENEVOLE_COMPETENCE : "est possedee via"
+
+    BENEVOLE ||--o{ ATELIER : "anime"
+    ATELIER ||--o{ INSCRIPTION : "recoit"
+
+    PERSONNE {
+        int id_personne PK
+        varchar nom
+        varchar prenom
+        varchar telephone
+        boolean est_adherent
+    }
+    BENEVOLE {
+        int id_personne PK,FK
+        date date_entree
+        boolean est_actif
+    }
+    DEPOT {
+        int id_depot PK
+        date date_depot
+        enum type_depot
+        int id_personne FK
+    }
+    CATEGORIE {
+        int id_categorie PK
+        varchar libelle UK
+    }
+    OBJET {
+        int id_objet PK
+        varchar etiquette UK
+        varchar designation
+        int poids_g
+        enum etat_arrivee
+        enum statut
+        numeric prix_affiche
+        date date_mise_en_rayon
+        date date_sortie_rayon
+        int id_depot FK
+        int id_categorie FK
+    }
+    REPARATION {
+        int id_reparation PK
+        date date_reparation
+        numeric duree_heures
+        enum resultat
+        int id_objet FK
+        int id_benevole FK
+    }
+    VENTE {
+        int id_vente PK
+        date date_vente
+        enum mode_paiement
+        int id_personne FK
+    }
+    LIGNE_VENTE {
+        int id_vente PK,FK
+        int id_objet PK,FK
+        numeric prix_paye
+    }
+    COMPETENCE {
+        int id_competence PK
+        varchar libelle UK
+    }
+    BENEVOLE_COMPETENCE {
+        int id_benevole PK,FK
+        int id_competence PK,FK
+    }
+    ATELIER {
+        int id_atelier PK
+        varchar intitule
+        date date_atelier
+        numeric duree_heures
+        int nb_places
+        int id_benevole FK
+    }
+    INSCRIPTION {
+        int id_atelier PK,FK
+        int id_personne PK,FK
+        date date_inscription
+        boolean est_present
+    }

@@ -1,0 +1,14 @@
+erDiagram
+    BENEVOLE ||--o{ BENEVOLE_COMPETENCE : "possede (RG11)"
+    COMPETENCE ||--o{ BENEVOLE_COMPETENCE : "detenue par (RG11)"
+    BENEVOLE {
+        int id_personne PK,FK
+    }
+    BENEVOLE_COMPETENCE {
+        int id_benevole PK,FK
+        int id_competence PK,FK
+    }
+    COMPETENCE {
+        int id_competence PK
+        varchar libelle UK "couture, electricite..."
+    }

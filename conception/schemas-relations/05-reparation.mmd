@@ -1,0 +1,17 @@
+erDiagram
+    OBJET ||--o{ REPARATION : "subit (RG7)"
+    BENEVOLE ||--o{ REPARATION : "realise (RG8)"
+    OBJET {
+        int id_objet PK
+    }
+    BENEVOLE {
+        int id_personne PK,FK
+    }
+    REPARATION {
+        int id_reparation PK
+        date date_reparation
+        numeric duree_heures
+        enum resultat "reussie | echouee"
+        int id_objet FK "NOT NULL"
+        int id_benevole FK "NOT NULL"
+    }

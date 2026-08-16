@@ -1,0 +1,22 @@
+erDiagram
+    PERSONNE ||--o{ VENTE : "achete"
+    VENTE ||--|{ LIGNE_VENTE : "regroupe (RG9)"
+    OBJET ||--o| LIGNE_VENTE : "est vendu via (RG9)"
+    PERSONNE {
+        int id_personne PK
+    }
+    VENTE {
+        int id_vente PK
+        date date_vente
+        enum mode_paiement "especes | carte | cheque (RG10)"
+        int id_personne FK "NULL si anonyme"
+    }
+    LIGNE_VENTE {
+        int id_vente PK,FK
+        int id_objet PK,FK "UNIQUE via PK composee"
+        numeric prix_paye "RG10"
+    }
+    OBJET {
+        int id_objet PK
+        numeric prix_affiche
+    }

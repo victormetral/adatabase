@@ -1,0 +1,36 @@
+graph TD
+    subgraph N0["Niveau 0 - aucune dependance"]
+        P[personne]
+        C[categorie]
+        CO[competence]
+    end
+    subgraph N1["Niveau 1"]
+        B[benevole]
+        D[depot]
+        V[vente]
+    end
+    subgraph N2["Niveau 2"]
+        O[objet]
+        BC[benevole_competence]
+        A[atelier]
+    end
+    subgraph N3["Niveau 3"]
+        R[reparation]
+        LV[ligne_vente]
+        I[inscription]
+    end
+
+    P --> B
+    P --> D
+    P --> V
+    D --> O
+    C --> O
+    B --> BC
+    CO --> BC
+    B --> A
+    O --> R
+    B --> R
+    V --> LV
+    O --> LV
+    A --> I
+    P --> I

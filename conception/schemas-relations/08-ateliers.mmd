@@ -1,0 +1,24 @@
+erDiagram
+    BENEVOLE ||--o{ ATELIER : "anime (RG12)"
+    ATELIER ||--o{ INSCRIPTION : "recoit (RG14)"
+    PERSONNE ||--o{ INSCRIPTION : "s inscrit (RG13)"
+    BENEVOLE {
+        int id_personne PK,FK
+    }
+    ATELIER {
+        int id_atelier PK
+        varchar intitule
+        date date_atelier
+        numeric duree_heures
+        int nb_places
+        int id_benevole FK "NOT NULL"
+    }
+    INSCRIPTION {
+        int id_atelier PK,FK
+        int id_personne PK,FK
+        date date_inscription
+        boolean est_present "RG13"
+    }
+    PERSONNE {
+        int id_personne PK
+    }

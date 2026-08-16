@@ -1,0 +1,16 @@
+erDiagram
+    PERSONNE ||--o{ DEPOT : "fait (RG2)"
+    DEPOT ||--|{ OBJET : "contient (RG3)"
+    PERSONNE {
+        int id_personne PK
+    }
+    DEPOT {
+        int id_depot PK
+        date date_depot
+        enum type_depot "boutique | domicile (RG1)"
+        int id_personne FK
+    }
+    OBJET {
+        int id_objet PK
+        int id_depot FK "NOT NULL"
+    }
