@@ -1,0 +1,66 @@
+flowchart TB
+    %% ===== ENTITES (rectangles) =====
+    PERSONNE["<b>PERSONNE</b><hr/><u>id_personne</u><br/>nom<br/>prenom<br/>telephone<br/>email<br/>est_adherent"]
+    BENEVOLE["<b>BENEVOLE</b><hr/><u>id_personne</u><br/>date_entree<br/>est_actif"]
+    DEPOT["<b>DEPOT</b><hr/><u>id_depot</u><br/>date_depot<br/>type_depot"]
+    OBJET["<b>OBJET</b><hr/><u>id_objet</u><br/>etiquette<br/>designation<br/>poids_g<br/>etat_arrivee<br/>statut<br/>prix_affiche<br/>date_mise_en_rayon<br/>date_sortie_rayon"]
+    CATEGORIE["<b>CATEGORIE</b><hr/><u>id_categorie</u><br/>libelle"]
+    REPARATION["<b>REPARATION</b><hr/><u>id_reparation</u><br/>date_reparation<br/>duree_heures<br/>resultat"]
+    VENTE["<b>VENTE</b><hr/><u>id_vente</u><br/>date_vente<br/>mode_paiement"]
+    COMPETENCE["<b>COMPETENCE</b><hr/><u>id_competence</u><br/>libelle"]
+    ATELIER["<b>ATELIER</b><hr/><u>id_atelier</u><br/>intitule<br/>date_atelier<br/>duree_heures<br/>nb_places"]
+
+    %% ===== ASSOCIATIONS (ellipses) =====
+    EST_AUSSI(["EST AUSSI"])
+    FAIT(["FAIT"])
+    CONTIENT(["CONTIENT"])
+    APPARTIENT(["APPARTIENT A"])
+    CONCERNE(["CONCERNE"])
+    EFFECTUE(["EFFECTUE"])
+    ACHETE(["ACHETE LORS DE"])
+    COMPORTE(["COMPORTE<br/><i>prix_paye</i>"])
+    POSSEDE(["POSSEDE"])
+    ANIME(["ANIME"])
+    INSCRIT(["S'INSCRIT A<br/><i>date_inscription</i><br/><i>est_present</i>"])
+
+    %% ===== LIENS + CARDINALITES =====
+    PERSONNE --- |"0,1"| EST_AUSSI
+    EST_AUSSI --- |"1,1"| BENEVOLE
+
+    PERSONNE --- |"0,n"| FAIT
+    FAIT --- |"1,1"| DEPOT
+
+    DEPOT --- |"1,n"| CONTIENT
+    CONTIENT --- |"1,1"| OBJET
+
+    OBJET --- |"1,1"| APPARTIENT
+    APPARTIENT --- |"0,n"| CATEGORIE
+
+    OBJET --- |"0,n"| CONCERNE
+    CONCERNE --- |"1,1"| REPARATION
+
+    BENEVOLE --- |"0,n"| EFFECTUE
+    EFFECTUE --- |"1,1"| REPARATION
+
+    PERSONNE --- |"0,n"| ACHETE
+    ACHETE --- |"0,1"| VENTE
+
+    VENTE --- |"1,n"| COMPORTE
+    COMPORTE --- |"0,1"| OBJET
+
+    BENEVOLE --- |"0,n"| POSSEDE
+    POSSEDE --- |"0,n"| COMPETENCE
+
+    BENEVOLE --- |"0,n"| ANIME
+    ANIME --- |"1,1"| ATELIER
+
+    PERSONNE --- |"0,n"| INSCRIT
+    INSCRIT --- |"0,n"| ATELIER
+
+    %% ===== STYLES =====
+    classDef entite fill:#EAF2FB,stroke:#2C5F9E,stroke-width:2px,color:#12314F,text-align:left
+    classDef assoc  fill:#FDF3E3,stroke:#C9832B,stroke-width:2px,color:#6B4410
+
+    class PERSONNE,BENEVOLE,DEPOT,OBJET,CATEGORIE,REPARATION,VENTE,COMPETENCE,ATELIER entite
+    class EST_AUSSI,FAIT,CONTIENT,APPARTIENT,CONCERNE,EFFECTUE,ACHETE,COMPORTE,POSSEDE,ANIME,INSCRIT assoc
+    linkStyle default stroke:#555,stroke-width:1.5px
