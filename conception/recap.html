@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Remise — fiche de rappel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14201C;
+  --paper:#FAF9F5;
+  --kraft:#DED6C4;
+  --kraft-deep:#B9AE95;
+  --vert:#2E6B4F;
+  --jaune:#E8B008;
+  --rouge:#A33B2A;
+  --gris:#5D6B65;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:15px;
+  line-height:1.55;
+}
+.sheet{max-width:960px;margin:0 auto;padding:0 28px 80px}
+
+/* ---------- EN-TETE ---------- */
+header{
+  background:var(--ink);
+  color:var(--paper);
+  margin:0 -28px 44px;
+  padding:38px 28px 32px;
+}
+.head-inner{max-width:904px;margin:0 auto}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--jaune);
+}
+h1{
+  font-family:'Archivo',system-ui,sans-serif;
+  font-weight:900;font-size:clamp(34px,7vw,62px);
+  line-height:.94;letter-spacing:-.025em;text-transform:uppercase;
+  margin:10px 0 14px;
+}
+h1 span{color:var(--jaune)}
+.lede{
+  font-size:17px;max-width:52ch;color:#D7DDD9;margin:0;
+}
+.head-meta{
+  display:flex;flex-wrap:wrap;gap:26px;margin-top:26px;
+  padding-top:20px;border-top:1px solid rgba(250,249,245,.22);
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  letter-spacing:.05em;color:#A9B5AF;
+}
+.head-meta b{color:var(--paper);font-weight:700}
+
+/* ---------- ETIQUETTE (signature) ---------- */
+section{margin-bottom:40px}
+.tag{
+  display:flex;align-items:stretch;gap:0;margin-bottom:16px;
+}
+.tag-hole{
+  width:34px;flex:0 0 34px;
+  background:var(--kraft);
+  border:1px solid var(--kraft-deep);border-right:none;
+  border-radius:3px 0 0 3px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  color:#6B6047;
+}
+.tag-body{
+  flex:1;
+  background:var(--kraft);
+  border:1px solid var(--kraft-deep);border-left:1px dashed var(--kraft-deep);
+  border-radius:0 3px 3px 0;
+  padding:7px 14px;
+}
+.tag-body h2{
+  font-family:'Archivo',sans-serif;font-weight:700;
+  font-size:15px;letter-spacing:.06em;text-transform:uppercase;
+  margin:0;color:#3B3524;
+}
+.tag-body p{margin:1px 0 0;font-size:12.5px;color:#6B6047;font-style:italic}
+
+/* ---------- CONTENU ---------- */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px 30px}
+.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 26px}
+p.body{margin:0 0 12px;max-width:66ch}
+ul{margin:0;padding-left:18px}
+li{margin-bottom:6px}
+code,.mono{font-family:'JetBrains Mono',monospace;font-size:12.5px}
+.rg{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--vert);white-space:nowrap;
+}
+.d{color:var(--rouge)}
+
+.rule-list{list-style:none;padding:0;margin:0}
+.rule-list li{
+  display:grid;grid-template-columns:46px 1fr;gap:10px;
+  padding:6px 0;border-bottom:1px solid #E6E3DA;margin:0;
+  font-size:13.5px;line-height:1.4;
+}
+.rule-list li:last-child{border-bottom:none}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{
+  font-family:'Archivo',sans-serif;font-size:10.5px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--gris);
+  text-align:left;padding:0 10px 6px 0;border-bottom:2px solid var(--ink);
+}
+td{padding:7px 10px 7px 0;border-bottom:1px solid #E6E3DA;vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:12px}
+
+.q-list{list-style:none;padding:0;margin:0;counter-reset:q}
+.q-list li{
+  counter-increment:q;position:relative;padding-left:30px;
+  font-size:13.5px;margin-bottom:8px;line-height:1.4;
+}
+.q-list li::before{
+  content:counter(q,decimal-leading-zero);
+  position:absolute;left:0;top:1px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--jaune);
+}
+
+.callout{
+  border-left:3px solid var(--vert);
+  background:#EFF2EE;
+  padding:14px 18px;margin:0;
+}
+.callout.warn{border-left-color:var(--rouge);background:#F5EEEC}
+.callout p{margin:0 0 8px}
+.callout p:last-child{margin:0}
+
+.phase{
+  border:1px solid #DCD9CF;border-top:3px solid var(--vert);
+  padding:12px 14px;background:#fff;
+}
+.phase.done{border-top-color:var(--kraft-deep);opacity:.62}
+.phase h3{
+  font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;margin:0 0 6px;
+}
+.phase ul{padding-left:15px;font-size:12.5px}
+.phase li{margin-bottom:3px}
+.stamp{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+  letter-spacing:.1em;color:var(--vert);
+}
+.stamp.todo{color:var(--rouge)}
+
+footer{
+  margin-top:56px;padding-top:18px;border-top:2px solid var(--ink);
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.05em;color:var(--gris);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+
+@media (max-width:720px){
+  .cols,.cols-3{grid-template-columns:1fr}
+  .sheet{padding:0 18px 60px}
+  header{margin:0 -18px 34px;padding:30px 18px 26px}
+}
+@media print{
+  body{background:#fff;font-size:11pt}
+  header{background:#14201C !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tag-hole,.tag-body,.callout,.phase{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  section{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <div class="eyebrow">Projet AdaDatabase · Bloc 1 · Semaines 11–12</div>
+    <h1>La <span>Remise</span></h1>
+    <p class="lede">Une ressourcerie tient ses comptes dans un cahier et un tableur.
+      Ta mission : transformer un entretien de coordinatrice en base PostgreSQL qui répond à dix questions.</p>
+    <div class="head-meta">
+      <span><b>14</b> règles de gestion</span>
+      <span><b>13</b> décisions</span>
+      <span><b>11</b> tables</span>
+      <span><b>10</b> questions</span>
+      <span><b>4</b> phases</span>
+    </div>
+  </div>
+</header>
+
+<div class="sheet">
+
+<!-- 01 -->
+<section>
+  <div class="tag">
+    <div class="tag-hole">01</div>
+    <div class="tag-body"><h2>Le client</h2><p>Ce qu'il fait, ce qui le bloque</p></div>
+  </div>
+  <div class="cols">
+    <div>
+      <p class="body">Les objets dont les gens n'ont plus l'usage sont collectés, triés,
+      réparés quand c'est possible, puis revendus à petit prix. Ce qui n'est pas sauvable
+      part au recyclage. Deux salariées, une trentaine de bénévoles, des ateliers ouverts au public.</p>
+    </div>
+    <div>
+      <p class="body"><b>Ce qui bloque :</b> personne ne sait ce qu'il y a en stock, ni ce qui
+      se vend. Surtout, l'association ne peut pas produire le <b>tonnage détourné de la
+      déchetterie</b> — le chiffre exact que la mairie exige pour renouveler la subvention.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section>
+  <div class="tag">
+    <div class="tag-hole">02</div>
+    <div class="tag-body"><h2>L'entretien avec Malika</h2><p>Six sujets, la matière première</p></div>
+  </div>
+  <ul class="rule-list">
+    <li><span class="rg">COLLECTE</span><span>Dépôt en boutique ou collecte à domicile. On note le donateur, la date, s'il est adhérent. Un dépôt peut contenir plusieurs objets, enregistrés séparément.</span></li>
+    <li><span class="rg">OBJETS</span><span>Étiquette numérotée, désignation, catégorie, état à l'arrivée, <b>poids pesé objet par objet</b>. Parcours : arrivé → trié → réparation → rayon → vendu, ou sorti après six mois.</span></li>
+    <li><span class="rg">RÉPARATION</span><span>Un bénévole s'en occupe, d'une heure à trois semaines. On veut savoir qui a réparé quoi et combien d'heures — pour le bilan annuel. Une réparation peut échouer.</span></li>
+    <li><span class="rg">BOUTIQUE</span><span>Date, <b>prix réellement payé</b> (des gestes sont faits aux adhérents), mode de paiement. Un passage en caisse, plusieurs objets.</span></li>
+    <li><span class="rg">BÉNÉVOLES</span><span>Coordonnées, date d'entrée, et une ou plusieurs compétences : couture, électricité, menuiserie, informatique, vente.</span></li>
+    <li><span class="rg">ATELIERS</span><span>Intitulé, date, durée, places, un animateur. Les gens s'inscrivent à l'avance ; beaucoup se désistent. Un atelier peut être reproposé plus tard.</span></li>
+  </ul>
+</section>
+
+<!-- 03 -->
+<section>
+  <div class="tag">
+    <div class="tag-hole">03</div>
+    <div class="tag-body"><h2>Les 14 règles de gestion</h2><p>Elles font foi — le modèle doit toutes les respecter</p></div>
+  </div>
+  <div class="cols">
+    <ul class="rule-list">
+      <li><span class="rg">RG1</span><span>Un dépôt = un donateur, une date, boutique <i>ou</i> domicile.</span></li>
+      <li><span class="rg">RG2</span><span>Une personne peut faire plusieurs dépôts.</span></li>
+      <li><span class="rg">RG3</span><span>Un dépôt contient ≥ 1 objet ; un objet vient d'un seul dépôt.</span></li>
+      <li><span class="rg">RG4</span><span>Un objet, une seule catégorie.</span></li>
+      <li><span class="rg">RG5</span><span>État à l'arrivée : bon état, à réparer, hors service.</span></li>
+      <li><span class="rg">RG6</span><span>Statut unique : arrivé, en réparation, en rayon, vendu, recyclé.</span></li>
+      <li><span class="rg">RG7</span><span>Un objet : zéro, une ou plusieurs réparations.</span></li>
+    </ul>
+    <ul class="rule-list">
+      <li><span class="rg">RG8</span><span>Une réparation = un objet, un bénévole, date, durée, résultat.</span></li>
+      <li><span class="rg">RG9</span><span>Un objet vendu une seule fois ; une vente porte sur plusieurs objets.</span></li>
+      <li><span class="rg">RG10</span><span>Vente : date, mode de paiement, prix payé par objet.</span></li>
+      <li><span class="rg">RG11</span><span>Bénévole ↔ compétence : n:n, zéro autorisé.</span></li>
+      <li><span class="rg">RG12</span><span>Atelier : intitulé, date, durée, places, un seul animateur.</span></li>
+      <li><span class="rg">RG13</span><span>Inscription : date d'inscription + présence effective.</span></li>
+      <li><span class="rg">RG14</span><span>Personne ↔ atelier : n:n.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 04 -->
+<section>
+  <div class="tag">
+    <div class="tag-hole">04</div>
+    <div class="tag-body"><h2>Les décisions</h2><p>Les trous de l'entretien, tranchés et assumés</p></div>
+  </div>
+  <table>
+    <thead><tr><th style="width:52px">Réf</th><th style="width:32%">Ambiguïté</th><th>Ce qui a été tranché</th></tr></thead>
+    <tbody>
+      <tr><td class="mono d">D1</td><td>Quatre populations ou une seule ?</td><td><b>Une table <code>personne</code></b>, <code>benevole</code> en spécialisation 1:1. On cumule les rôles sans se dupliquer.</td></tr>
+      <tr><td class="mono d">D2</td><td>Historiser le parcours de l'objet ?</td><td>Non. Un attribut <code>statut</code> + <code>date_mise_en_rayon</code>. RG6 dit « statut unique ».</td></tr>
+      <tr><td class="mono d">D3</td><td>Boutique / domicile : deux tables ?</td><td>Non, un ENUM <code>type_depot</code>. Aucun attribut ne les différencie.</td></tr>
+      <tr><td class="mono d">D4</td><td>« Au moins un objet par dépôt »</td><td>Dans le schéma E-A (1,n), pas en SQL. Trigger évité, choix documenté.</td></tr>
+      <tr><td class="mono d">D5</td><td>Adhésion par année ?</td><td>Non. Booléen courant. La comptabilité est hors périmètre.</td></tr>
+      <tr><td class="mono d">D6</td><td>Prix affiché vs prix payé</td><td>Les deux. L'écart mesure les gestes faits aux adhérents.</td></tr>
+      <tr><td class="mono d">D7</td><td>Compétences en texte libre ?</td><td>Non, table de référence, libellé UNIQUE. Évite « éléctricité ».</td></tr>
+      <tr><td class="mono d">D8</td><td>« Disponible » pour animer ?</td><td>= bénévole actif, sans atelier ce jour-là. Les plannings sont hors périmètre.</td></tr>
+      <tr><td class="mono d">D9</td><td>Unité du poids ?</td><td>Grammes, entier. Conversion en tonnes à l'affichage.</td></tr>
+      <tr><td class="mono d">D10</td><td>Atelier reproposé ?</td><td>Nouvelle ligne, même intitulé. Pas de catalogue.</td></tr>
+      <tr><td class="mono d">D11</td><td>Acheteur toujours connu ?</td><td>Non, <code>vente.id_personne</code> nullable. Client de passage.</td></tr>
+      <tr><td class="mono d">D12</td><td>Réparation : entité ou association ?</td><td><b>Entité.</b> Le même bénévole peut réparer deux fois le même objet.</td></tr>
+      <tr><td class="mono d">D13</td><td>Table <code>ligne_vente</code> ?</td><td><b>Non.</b> RG9 pose du 1:n, donc R2 : <code>#id_vente</code> et <code>prix_paye</code> migrent dans <code>objet</code>.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 05 -->
+<section>
+  <div class="tag">
+    <div class="tag-hole">05</div>
+    <div class="tag-body"><h2>Le passage E-A → relationnel</h2><p>Le seul réflexe : regarder la cardinalité maximale</p></div>
+  </div>
+  <div class="callout" style="margin-bottom:18px">
+    <p><b>R1</b> — Une entité devient une table ; son identifiant devient la clé primaire.</p>
+    <p><b>R2</b> — Une patte en cardinalité max <b>1</b> : la clé de l'entité opposée migre en clé étrangère <b>du côté du 1</b>, avec les attributs de l'association.</p>
+    <p><b>R3</b> — Les <b>deux</b> pattes en max <b>n</b> : l'association devient une table, clé primaire composée.</p>
+  </div>
+  <table>
+    <thead><tr><th style="width:30%">Table</th><th style="width:22%">Règle</th><th>Association source</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">personne</td><td>R1</td><td>—</td></tr>
+      <tr><td class="mono">categorie</td><td>R1</td><td>—</td></tr>
+      <tr><td class="mono">competence</td><td>R1</td><td>—</td></tr>
+      <tr><td class="mono">benevole</td><td>R1 + R2</td><td>EST AUSSI — la FK <i>est</i> la PK (spécialisation 1:1)</td></tr>
+      <tr><td class="mono">depot</td><td>R1 + R2</td><td>FAIT</td></tr>
+      <tr><td class="mono">vente</td><td>R1 + R2</td><td>ACHÈTE LORS DE — FK nullable</td></tr>
+      <tr><td class="mono">objet</td><td>R1 + R2 ×3</td><td>CONTIENT · APPARTIENT À · COMPORTE</td></tr>
+      <tr><td class="mono">atelier</td><td>R1 + R2</td><td>ANIME</td></tr>
+      <tr><td class="mono">reparation</td><td>R1 + R2 ×2</td><td>CONCERNE · EFFECTUE</td></tr>
+      <tr><td class="mono">benevole_competence</td><td>R3</td><td>POSSÈDE — liaison pure</td></tr>
+      <tr><td class="mono">inscription</td><td>R3</td><td>S'INSCRIT À — porte date + présence</td></tr>
+    </tbody>
+  </table>
+  <p class="body" style="margin-top:12px;font-size:13px;color:var(--gris)">
+    9 entités → 9 tables · 9 associations 1:n → 9 clés étrangères · 2 associations n:n → 2 tables.
+    <b>Ordre de création :</b> personne, categorie, competence → benevole, depot, vente → objet, benevole_competence, atelier → reparation, inscription.
+  </p>
+</section>
+
+<!-- 06 -->
+<section>
+  <div class="tag">
+    <div class="tag-hole">06</div>
+    <div class="tag-body"><h2>Les dix questions</h2><p>Le test de la conception : si l'une est impossible, le modèle a un trou</p></div>
+  </div>
+  <div class="cols">
+    <ol class="q-list">
+      <li>Objets reçus le mois dernier, et poids total ?</li>
+      <li>Objets en rayon, et depuis combien de temps ?</li>
+      <li>Catégorie qui se vend le mieux ? Qui rapporte le plus ?</li>
+      <li>Heures de bénévolat en réparation cette année ?</li>
+      <li>Taux de réussite des réparations, par bénévole et global ?</li>
+    </ol>
+    <ol class="q-list" start="6" style="counter-reset:q 5">
+      <li>Personnes ayant fait plus de trois dépôts ?</li>
+      <li>Poids total détourné de la déchetterie (tout sauf recyclé) ?</li>
+      <li>Taux de présence réelle sur les ateliers ?</li>
+      <li>Bénévoles compétents en électricité et disponibles ?</li>
+      <li>Objets en rayon depuis plus de six mois ?</li>
+    </ol>
+  </div>
+  <div class="callout warn" style="margin-top:16px">
+    <p><b>Hors périmètre — ne pas modéliser :</b> comptes utilisateurs et mots de passe · comptabilité (factures, TVA, subventions) · plannings de présence des bénévoles · photos des objets.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section>
+  <div class="tag">
+    <div class="tag-hole">07</div>
+    <div class="tag-body"><h2>Où en est le projet</h2><p>Quatre phases, dans l'ordre</p></div>
+  </div>
+  <div class="cols-3">
+    <div class="phase done">
+      <h3>Phase 1 — Recenser</h3>
+      <ul><li>dictionnaire.md</li><li>decisions.md</li></ul>
+      <span class="stamp">✓ Fait</span>
+    </div>
+    <div class="phase done">
+      <h3>Phase 2 — Schéma E-A</h3>
+      <ul><li>schema-ea.png</li><li>phrases-cardinalites.md</li><li>Aucune clé étrangère</li></ul>
+      <span class="stamp">✓ Fait</span>
+    </div>
+    <div class="phase done">
+      <h3>Phase 3 — Relationnel</h3>
+      <ul><li>schema-relationnel.md</li><li>arbre-dependances.png</li></ul>
+      <span class="stamp">✓ Fait</span>
+    </div>
+  </div>
+  <div class="phase" style="margin-top:12px">
+    <h3>Phase 4 — La base, pour de vrai</h3>
+    <div class="cols">
+      <ul>
+        <li><code>migration_up.sql</code> — ENUM en tête, puis CREATE TABLE dans l'ordre de l'arbre, toutes contraintes</li>
+        <li><code>migration_down.sql</code> — l'inverse exact, <code>IF EXISTS</code> partout. Test <b>up → down → up</b> sans erreur</li>
+      </ul>
+      <ul>
+        <li><code>seed.sql</code> — 8 catégories, 10 personnes, 12 bénévoles, 40 objets, 15 réparations, 10 ventes, 4 ateliers</li>
+        <li><code>queries.sql</code> — les 10 questions, une requête chacune, commentée</li>
+      </ul>
+    </div>
+    <span class="stamp todo">● À faire</span>
+  </div>
+</section>
+
+<!-- 08 -->
+<section>
+  <div class="tag">
+    <div class="tag-hole">08</div>
+    <div class="tag-body"><h2>La soutenance</h2><p>Ce qui est noté, et les questions qui tombent</p></div>
+  </div>
+  <div class="cols">
+    <div>
+      <p class="body"><b>Six critères :</b> la conception répond-elle au besoin · les ambiguïtés
+      sont-elles tranchées explicitement · sais-tu dire quelle règle a produit quelle table ·
+      les contraintes sont-elles complètes · le down est-il l'inverse exact · les dix questions
+      trouvent-elles leur réponse · sais-tu défendre chaque choix.</p>
+    </div>
+    <div>
+      <p class="body" style="margin-bottom:8px"><b>Trois questions à préparer :</b></p>
+      <ul style="font-size:13.5px">
+        <li>Pourquoi <code>benevole</code> n'a pas d'identifiant propre ?</li>
+        <li>Pourquoi (0,n) et pas (1,n) sur POSSÈDE ?</li>
+        <li>Pourquoi pas de table de liaison pour la vente ?</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:16px">
+    <p><b>Ce projet ne s'arrête pas là.</b> Cette base devient le socle d'AdaRemise en semaines 15–16 :
+    l'application React + Express de La Remise, construite à quatre. Les dix questions ci-dessus
+    deviendront les écrans du tableau de bord.</p>
+  </div>
+</section>
+
+<footer>
+  <span>Fiche de rappel · lecture 5 min</span>
+  <span>~/Dev/adatabase</span>
+</footer>
+
+</div>
+</body>
+</html>

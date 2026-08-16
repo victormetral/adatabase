@@ -55,6 +55,3 @@
 1. **REPARATION est une entité, pas une association.** Un même bénévole peut réparer deux fois le même objet ; une association binaire ne peut pas stocker deux fois le même couple.
 2. **COMPORTE et S'INSCRIT A restent des associations n:n porteuses de données.** Leur couple d'identifiants est unique, donc pas besoin d'entité.
 3. **EST AUSSI est une spécialisation 1:1.** BENEVOLE n'a pas d'identifiant propre : il reprend celui de PERSONNE.
-
-> Si on demande « pourquoi (0,n) et pas (1,n) sur POSSEDE ? » → RG11 dit explicitement
-> « zéro, une ou plusieurs compétences ». C'est la règle qui tranche, pas une intuition.
