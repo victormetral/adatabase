@@ -16,7 +16,6 @@ graph TD
     end
     subgraph N3["Niveau 3"]
         R[reparation]
-        LV[ligne_vente]
         I[inscription]
     end
 
@@ -25,12 +24,11 @@ graph TD
     P --> V
     D --> O
     C --> O
+    V --> O
     B --> BC
     CO --> BC
     B --> A
     O --> R
     B --> R
-    V --> LV
-    O --> LV
     A --> I
     P --> I

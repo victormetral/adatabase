@@ -10,7 +10,7 @@ Chaque `.mmd` est la source Mermaid (éditable), chaque `.png` est le rendu.
 | `03-depot-objet` | Qui donne quoi, et quand (RG1, RG2, RG3) |
 | `04-objet-categorie` | Le classement et le cycle de vie de l'objet (RG4, RG5, RG6) |
 | `05-reparation` | Qui répare quoi, combien de temps (RG7, RG8) |
-| `06-vente` | Le passage en caisse multi-objets (RG9, RG10) |
+| `06-vente` | Le passage en caisse multi-objets (RG9, RG10, D13) |
 | `07-competences` | Le n:n bénévole ↔ compétence (RG11) |
 | `08-ateliers` | Animation et inscriptions (RG12, RG13, RG14) |
 | `09-arbre-dependances` | L'ordre de création des tables |
@@ -72,21 +72,23 @@ simple table de liaison.
 
 ---
 
-## 06 — Vente / Ligne de vente / Objet
+## 06 — Vente / Objet
 
-- Une vente regroupe **1 à n** objets. *(RG9 — un passage en caisse, plusieurs objets)*
+- Une vente comporte **1 à n** objets. *(RG9 — un passage en caisse, plusieurs objets)*
 - Un objet est vendu lors de **0 ou 1** vente. *(RG9)*
 
-`ligne_vente` a une **clé primaire composée** (`id_vente`, `id_objet`) et porte
-`prix_paye` *(RG10)*. Comme `id_objet` fait partie de la PK et qu'un objet ne peut
-apparaître qu'une fois, la contrainte « un objet vendu une seule fois » est
-garantie par un `UNIQUE(id_objet)`.
+Association **1:n**, donc traitée par **R2** : la clé de `vente` migre dans `objet`,
+accompagnée de `prix_paye`, l'attribut porté par l'association. **Pas de table de
+liaison** — voir décision D13.
 
 Deux prix cohabitent volontairement *(décision D6)* :
 - `objet.prix_affiche` : le prix en rayon
-- `ligne_vente.prix_paye` : ce qui a réellement été encaissé
+- `objet.prix_paye` : ce qui a réellement été encaissé
 
-L'écart entre les deux = les gestes commerciaux faits aux adhérents.
+L'écart entre les deux mesure les gestes commerciaux faits aux adhérents.
+
+> `id_vente` et `prix_paye` sont NULL tant que l'objet n'est pas vendu, en cohérence
+> avec `statut = 'vendu'`.
 
 ---
 
@@ -130,8 +132,8 @@ Ordre de création dans `migration_up.sql` (et ordre inverse dans `migration_dow
 |---|---|---|
 | 0 | `personne`, `categorie`, `competence` | rien |
 | 1 | `benevole`, `depot`, `vente` | personne |
-| 2 | `objet`, `benevole_competence`, `atelier` | depot, categorie, benevole, competence |
-| 3 | `reparation`, `ligne_vente`, `inscription` | objet, benevole, vente, atelier, personne |
+| 2 | `objet`, `benevole_competence`, `atelier` | depot, categorie, vente, benevole, competence |
+| 3 | `reparation`, `inscription` | objet, benevole, atelier, personne |
 
 Une table ne peut être créée que si toutes celles qu'elle référence existent déjà.
 Le `DROP` se fait exactement dans l'ordre inverse : niveau 3 → 0.

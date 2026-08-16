@@ -121,3 +121,15 @@ Chaque ambiguïté relevée dans l'entretien de Malika, le choix retenu, et sa j
 **Décision :** `reparation` est une entité avec son propre identifiant, reliée à `objet` et `benevole` par deux associations.
 
 **Justification :** une association binaire porteuse de données ne peut pas stocker deux fois le même couple (objet, bénévole). Or un même bénévole peut réparer deux fois le même objet. L'entité est la seule modélisation correcte.
+
+---
+
+## D13 — La vente est rattachée à l'objet par R2, sans table de liaison
+
+**Ambiguïté :** faut-il une table `ligne_vente` comme dans un logiciel de caisse classique ?
+
+**Décision :** non. `objet` reçoit `#id_vente` et `prix_paye`, tous deux nullables.
+
+**Justification :** RG9 pose une association **1:n**, pas n:n — un objet est vendu lors d'une seule vente. Une patte de l'association a donc une cardinalité maximale de 1, ce qui déclenche **R2** et non R3 : la clé de `vente` migre dans `objet`, accompagnée de l'attribut porté par l'association. Une table de liaison serait justifiée si un objet pouvait apparaître dans plusieurs ventes, ou si la vente portait des quantités — ce n'est pas le cas d'une ressourcerie où chaque objet est une pièce unique.
+
+**Conséquence assumée :** `objet.id_vente` et `objet.prix_paye` sont NULL tant que l'objet n'est pas vendu. C'est cohérent avec `statut = 'vendu'`, et une contrainte CHECK garantit la cohérence des deux.

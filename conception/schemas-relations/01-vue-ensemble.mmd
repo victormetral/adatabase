@@ -6,12 +6,10 @@ erDiagram
 
     DEPOT ||--|{ OBJET : "contient"
     CATEGORIE ||--o{ OBJET : "classe"
+    VENTE ||--|{ OBJET : "comporte"
 
     OBJET ||--o{ REPARATION : "subit"
     BENEVOLE ||--o{ REPARATION : "realise"
-
-    OBJET ||--o| LIGNE_VENTE : "est vendu via"
-    VENTE ||--|{ LIGNE_VENTE : "regroupe"
 
     BENEVOLE ||--o{ BENEVOLE_COMPETENCE : "possede"
     COMPETENCE ||--o{ BENEVOLE_COMPETENCE : "est possedee via"
@@ -24,6 +22,7 @@ erDiagram
         varchar nom
         varchar prenom
         varchar telephone
+        varchar email
         boolean est_adherent
     }
     BENEVOLE {
@@ -41,6 +40,12 @@ erDiagram
         int id_categorie PK
         varchar libelle UK
     }
+    VENTE {
+        int id_vente PK
+        date date_vente
+        enum mode_paiement
+        int id_personne FK
+    }
     OBJET {
         int id_objet PK
         varchar etiquette UK
@@ -51,8 +56,10 @@ erDiagram
         numeric prix_affiche
         date date_mise_en_rayon
         date date_sortie_rayon
+        numeric prix_paye
         int id_depot FK
         int id_categorie FK
+        int id_vente FK
     }
     REPARATION {
         int id_reparation PK
@@ -61,17 +68,6 @@ erDiagram
         enum resultat
         int id_objet FK
         int id_benevole FK
-    }
-    VENTE {
-        int id_vente PK
-        date date_vente
-        enum mode_paiement
-        int id_personne FK
-    }
-    LIGNE_VENTE {
-        int id_vente PK,FK
-        int id_objet PK,FK
-        numeric prix_paye
     }
     COMPETENCE {
         int id_competence PK

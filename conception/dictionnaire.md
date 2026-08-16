@@ -53,8 +53,10 @@ Les clés primaires techniques sont des `SERIAL` (entier auto-incrémenté).
 | prix_affiche | Prix en rayon | NUMERIC | 8,2 | NULL tant que non mis en rayon | Décision D6 |
 | date_mise_en_rayon | Entrée en rayon | DATE | — | NULL autorisé | Questions 2 et 10 |
 | date_sortie_rayon | Sortie de rayon | DATE | — | NULL autorisé | Invendu au bout de 6 mois |
+| prix_paye | Prix réellement encaissé | NUMERIC | 8,2 | NULL tant que non vendu, CHECK >= 0 | RG10, décision D6 |
 | id_depot | Dépôt d'origine | INTEGER | — | NOT NULL, FK → depot | RG3 |
 | id_categorie | Catégorie | INTEGER | — | NOT NULL, FK → categorie | RG4 |
+| id_vente | Vente | INTEGER | — | NULL tant que non vendu, FK → vente | RG9, produit par R2 (D13) |
 
 ## REPARATION
 
@@ -75,14 +77,6 @@ Les clés primaires techniques sont des `SERIAL` (entier auto-incrémenté).
 | date_vente | Date de la vente | DATE | — | NOT NULL, DEFAULT CURRENT_DATE | RG10 |
 | mode_paiement | Moyen de paiement | ENUM | — | NOT NULL | RG10 |
 | id_personne | Acheteur | INTEGER | — | NULL autorisé, FK → personne | Décision D11 |
-
-## LIGNE_VENTE — association porteuse (RG9, RG10)
-
-| Nom | Description | Type | Taille | Contraintes | Remarques |
-|---|---|---|---|---|---|
-| id_vente | Vente concernée | INTEGER | — | PK composée, FK → vente | |
-| id_objet | Objet vendu | INTEGER | — | PK composée, FK → objet, UNIQUE | UNIQUE : RG9 |
-| prix_paye | Prix réellement encaissé | NUMERIC | 8,2 | NOT NULL, CHECK >= 0 | RG10, décision D6 |
 
 ## COMPETENCE
 

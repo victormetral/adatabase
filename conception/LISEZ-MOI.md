@@ -5,10 +5,11 @@
 | Fichier | Phase | Rôle |
 |---|---|---|
 | `dictionnaire.md` | 1 | Inventaire de toutes les données |
-| `decisions.md` | 1 | Les 12 ambiguïtés tranchées |
+| `decisions.md` | 1 | Les 13 ambiguïtés tranchées |
 | `schema-ea.png` | 2 | Schéma entité-association — **sans clé étrangère** |
-| `schema-ea.dot` | 2 | Source éditable du schéma E-A (graphviz) |
+| `schema-ea.mmd` | 2 | Source éditable du schéma E-A (Mermaid) |
 | `phrases-cardinalites.md` | 2 | Lecture à voix haute de chaque cardinalité |
+| `schema-relationnel.md` | 3 | Les 11 relations + la règle qui a produit chacune |
 | `arbre-dependances.png` | 3 | Ordre de création des tables |
 | `schemas-relations/` | — | 9 schémas de détail, un par relation, pour réviser |
 
@@ -25,6 +26,8 @@ Les FK ne sont pas une donnée de départ, elles sont ce qu'on démontre en Phas
 ## Régénérer les images
 
 ```bash
-brew install graphviz
-dot -Tpng -Gdpi=140 schema-ea.dot -o schema-ea.png
+npm install -g @mermaid-js/mermaid-cli
+mmdc -i schema-ea.mmd -o schema-ea.png -b white -s 2
 ```
+
+Ou coller le `.mmd` sur https://mermaid.live pour un rendu immédiat.
