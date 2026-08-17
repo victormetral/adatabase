@@ -1,15 +1,12 @@
 # Schéma relationnel — La Remise
 
-Résultat du passage du schéma E-A au relationnel.
-Notation : `Table(clePrimaire, champ, #cleEtrangere)`.
-
 ---
 
 ## Les trois règles de passage
 
 | Règle | Énoncé | Où elle s'applique ici |
 |---|---|---|
-| **R1** | Toute entité devient une table. Son identifiant devient la clé primaire. | Les 9 entités |
+| **R1** | Toute entité devient une table. Son identifiant devient la clé primaire. | Les 9 entités (+ 2 tables issues d'associations)| 
 | **R2** | Association binaire dont **une patte a une cardinalité max = 1** : la clé de l'entité opposée migre en clé étrangère du côté (x,1), avec les éventuels attributs de l'association. | EST AUSSI, FAIT, CONTIENT, APPARTIENT A, CONCERNE, EFFECTUE, ACHETE, COMPORTE, ANIME |
 | **R3** | Association dont **les deux pattes ont une cardinalité max = n** : elle devient une table, clé primaire composée des clés des entités, plus ses attributs propres. | POSSEDE, S'INSCRIT A |
 
@@ -41,6 +38,9 @@ benevole(#id_personne, date_entree, est_actif)
 ```
 > **R1** sur l'entité BENEVOLE, puis **R2** sur EST AUSSI — PERSONNE (0,1) — (1,1) BENEVOLE.
 > Cardinalité max 1 des deux côtés : la clé de `personne` migre et **devient elle-même la clé primaire**. C'est la signature d'une spécialisation 1:1 *(D1)*.
+FK → référence la personne correspondante.
+PK → empêche une personne d’être enregistrée plusieurs fois comme bénévole.
+Le bénévole 42 est la personne 42. On ne crée pas un nouvel id_benevole.
 
 ### 5. depot
 ```
@@ -67,7 +67,7 @@ objet(id_objet, etiquette, designation, poids_g, etat_arrivee, statut,
 > - APPARTIENT A — OBJET (1,1) — (0,n) CATEGORIE → `#id_categorie`, NOT NULL *(RG4)*
 > - COMPORTE — VENTE (1,n) — (0,1) OBJET → `#id_vente` **et l'attribut `prix_paye` porté par l'association**, tous deux nullables *(RG9, RG10, D13)*
 >
-> Le troisième cas est le plus discuté : voir D13. L'association est 1:n, donc R2, pas R3 — pas de table de liaison.
+> L'association est 1:n, donc R2, pas R3 — pas de table de liaison.
 
 ### 8. atelier
 ```
@@ -147,7 +147,7 @@ Non déductibles des règles de passage, mais imposées par les RG :
 |---|---|---|
 | `UNIQUE(etiquette)` | objet | Étiquette physique unique |
 | `UNIQUE(libelle)` | categorie, competence | D7 |
-| `CHECK(poids_g > 0)` | objet | Bon sens métier |
+| `CHECK(poids_g > 0)` | objet |  |
 | `CHECK(duree_heures > 0)` | reparation, atelier | RG8, RG12 |
 | `CHECK(nb_places > 0)` | atelier | RG12 |
 | `CHECK(prix_paye >= 0)` | objet | RG10 |

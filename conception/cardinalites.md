@@ -1,7 +1,5 @@
 # Phrases de lecture des cardinalités
 
-À lire sous le schéma E-A (`schema-ea.png`). Une phrase par sens de lecture.
-
 ---
 
 **EST AUSSI — PERSONNE (0,1) — (1,1) BENEVOLE**
@@ -49,9 +47,3 @@
 - Un atelier reçoit zéro ou plusieurs inscriptions. *(RG13, RG14)*
 
 ---
-
-## Trois choix à savoir défendre
-
-1. **REPARATION est une entité, pas une association.** Un même bénévole peut réparer deux fois le même objet ; une association binaire ne peut pas stocker deux fois le même couple.
-2. **COMPORTE et S'INSCRIT A restent des associations n:n porteuses de données.** Leur couple d'identifiants est unique, donc pas besoin d'entité.
-3. **EST AUSSI est une spécialisation 1:1.** BENEVOLE n'a pas d'identifiant propre : il reprend celui de PERSONNE.
