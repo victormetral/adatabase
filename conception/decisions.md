@@ -54,13 +54,13 @@ Chaque ambiguïté relevée dans l'entretien de Malika, le choix retenu, et sa j
 
 ---
 
-## D6 — Le prix de vente est porté par la ligne de vente
+## D6 — Deux prix distincts : affiché et payé
 
 **Ambiguïté :** l'objet a « un prix » en rayon, et la vente a « le prix réellement payé ».
 
-**Décision :** `prix_affiche` sur `objet`, `prix_paye` sur la table de liaison `ligne_vente`.
+**Décision :** `prix_affiche` et `prix_paye`, tous deux portés par `objet`.
 
-**Justification :** RG10 impose le prix payé pour chaque objet vendu. Conserver les deux permet de mesurer les gestes commerciaux faits aux adhérents, que Malika mentionne explicitement.
+**Justification :** RG10 impose le prix payé pour chaque objet vendu. Conserver les deux permet de mesurer les gestes commerciaux faits aux adhérents, que Malika mentionne explicitement. Le rattachement de `prix_paye` à `objet` n'est pas un choix arbitraire : c'est le résultat de R2 appliqué à l'association COMPORTE, qui fait migrer la clé de `vente` **et** l'attribut porté par l'association — voir D13.
 
 ---
 
@@ -132,4 +132,4 @@ Chaque ambiguïté relevée dans l'entretien de Malika, le choix retenu, et sa j
 
 **Justification :** RG9 pose une association **1:n**, pas n:n — un objet est vendu lors d'une seule vente. Une patte de l'association a donc une cardinalité maximale de 1, ce qui déclenche **R2** et non R3 : la clé de `vente` migre dans `objet`, accompagnée de l'attribut porté par l'association. Une table de liaison serait justifiée si un objet pouvait apparaître dans plusieurs ventes, ou si la vente portait des quantités — ce n'est pas le cas d'une ressourcerie où chaque objet est une pièce unique.
 
-**Conséquence assumée :** `objet.id_vente` et `objet.prix_paye` sont NULL tant que l'objet n'est pas vendu. C'est cohérent avec `statut = 'vendu'`, et une contrainte CHECK garantit la cohérence des deux.
+**Conséquence assumée :** `objet.id_vente` et `objet.prix_paye` sont NULL tant que l'objet n'est pas vendu. La contrainte `chk_vente_coherente` garantit que `statut = 'vendu'` et ces deux colonnes sont toujours cohérents.

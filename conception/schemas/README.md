@@ -5,7 +5,7 @@ Chaque `.mmd` est la source Mermaid (éditable), chaque `.png` est le rendu.
 
 | Fichier | Ce qu'il montre |
 |---|---|
-| `01-vue-ensemble` | Le modèle complet, 12 tables |
+| `01-vue-ensemble` | Le modèle complet, 11 tables |
 | `02-personne-benevole` | La spécialisation 1:1 (décision D1) |
 | `03-depot-objet` | Qui donne quoi, et quand (RG1, RG2, RG3) |
 | `04-objet-categorie` | Le classement et le cycle de vie de l'objet (RG4, RG5, RG6) |

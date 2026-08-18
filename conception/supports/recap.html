@@ -276,7 +276,7 @@ footer{
       <tr><td class="mono d">D3</td><td>Boutique / domicile : deux tables ?</td><td>Non, un ENUM <code>type_depot</code>. Aucun attribut ne les différencie.</td></tr>
       <tr><td class="mono d">D4</td><td>« Au moins un objet par dépôt »</td><td>Dans le schéma E-A (1,n), pas en SQL. Trigger évité, choix documenté.</td></tr>
       <tr><td class="mono d">D5</td><td>Adhésion par année ?</td><td>Non. Booléen courant. La comptabilité est hors périmètre.</td></tr>
-      <tr><td class="mono d">D6</td><td>Prix affiché vs prix payé</td><td>Les deux. L'écart mesure les gestes faits aux adhérents.</td></tr>
+      <tr><td class="mono d">D6</td><td>Prix affiché vs prix payé</td><td>Les deux, portés par <code>objet</code>. L'écart mesure les gestes faits aux adhérents.</td></tr>
       <tr><td class="mono d">D7</td><td>Compétences en texte libre ?</td><td>Non, table de référence, libellé UNIQUE. Évite « éléctricité ».</td></tr>
       <tr><td class="mono d">D8</td><td>« Disponible » pour animer ?</td><td>= bénévole actif, sans atelier ce jour-là. Les plannings sont hors périmètre.</td></tr>
       <tr><td class="mono d">D9</td><td>Unité du poids ?</td><td>Grammes, entier. Conversion en tonnes à l'affichage.</td></tr>
@@ -343,7 +343,12 @@ footer{
       <li>Objets en rayon depuis plus de six mois ?</li>
     </ol>
   </div>
-  <div class="callout warn" style="margin-top:16px">
+  <div class="callout" style="margin-top:16px">
+    <p><b>Les réponses obtenues sur le jeu de données :</b> 0,329 tonne détournée sur 40 objets ·
+    86,7 % de réussite sur 15 réparations · 66,7 % de présence réelle aux ateliers ·
+    2 donateurs à plus de trois dépôts · 5 objets à sortir du rayon.</p>
+  </div>
+  <div class="callout warn" style="margin-top:12px">
     <p><b>Hors périmètre — ne pas modéliser :</b> comptes utilisateurs et mots de passe · comptabilité (factures, TVA, subventions) · plannings de présence des bénévoles · photos des objets.</p>
   </div>
 </section>
@@ -352,7 +357,7 @@ footer{
 <section>
   <div class="tag">
     <div class="tag-hole">07</div>
-    <div class="tag-body"><h2>Où en est le projet</h2><p>Quatre phases, dans l'ordre</p></div>
+    <div class="tag-body"><h2>Les quatre phases</h2><p>Toutes livrées</p></div>
   </div>
   <div class="cols-3">
     <div class="phase done">
@@ -371,7 +376,7 @@ footer{
       <span class="stamp">✓ Fait</span>
     </div>
   </div>
-  <div class="phase" style="margin-top:12px">
+  <div class="phase done" style="margin-top:12px">
     <h3>Phase 4 — La base, pour de vrai</h3>
     <div class="cols">
       <ul>
@@ -383,7 +388,7 @@ footer{
         <li><code>queries.sql</code> — les 10 questions, une requête chacune, commentée</li>
       </ul>
     </div>
-    <span class="stamp todo">● À faire</span>
+    <span class="stamp">✓ Fait — test up → down → up validé, les 10 requêtes répondent</span>
   </div>
 </section>
 
