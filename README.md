@@ -11,13 +11,17 @@ Elle servira de socle à **AdaRemise** (React + Express).
 ## Démarrer en trois commandes
 
 ```bash
-docker compose up -d
+docker compose up -d --wait
 docker exec -i laremise_db psql -U remise -d laremise < migration_up.sql
 docker exec -i laremise_db psql -U remise -d laremise < seed.sql
 ```
 
 PostgreSQL 16, exposé sur le port **5433** (pour ne pas entrer en conflit avec une
 installation locale). Identifiants : `remise` / `remise`, base `laremise`.
+
+L'option `--wait` s'appuie sur le `healthcheck` du `docker-compose.yml` : elle bloque
+tant que PostgreSQL n'accepte pas les connexions. Sans elle, sur un volume neuf, les
+deux commandes suivantes partiraient avant que le serveur soit prêt.
 
 **Répondre aux 10 questions du client :**
 
@@ -96,6 +100,15 @@ docker exec -it laremise_db psql -U remise -d laremise -c "\dt"
 ```
 
 Attendu : 11 tables.
+
+**Depuis zéro**, dans les conditions d'un premier clone — volume supprimé compris :
+
+```bash
+docker compose down -v
+docker compose up -d --wait
+docker exec -i laremise_db psql -U remise -d laremise < migration_up.sql
+docker exec -i laremise_db psql -U remise -d laremise < seed.sql
+```
 
 **Le jeu de données** contient 26 personnes (dont 12 bénévoles), 40 objets
 répartis sur les 5 statuts, 15 réparations, 10 ventes et 4 ateliers.
