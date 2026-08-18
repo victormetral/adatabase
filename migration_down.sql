@@ -1,10 +1,3 @@
--- ============================================================
--- migration_down.sql — La Remise
--- Inverse exact de migration_up.sql
--- Ordre : tables du niveau 3 au niveau 0, puis les ENUM
--- Rejouable : IF EXISTS partout
--- ============================================================
-
 -- ---------- NIVEAU 3 ----------
 DROP TABLE IF EXISTS inscription;
 DROP TABLE IF EXISTS reparation;

@@ -10,7 +10,7 @@ CREATE TYPE etat_objet_enum          AS ENUM ('bon_etat', 'a_reparer', 'hors_ser
 CREATE TYPE statut_objet_enum        AS ENUM ('arrive', 'en_reparation', 'en_rayon', 'vendu', 'recycle');
 CREATE TYPE resultat_reparation_enum AS ENUM ('reussie', 'echouee');
 CREATE TYPE mode_paiement_enum       AS ENUM ('especes', 'carte', 'cheque');
-
+ 
 
 -- ============================================================
 -- NIVEAU 0 — aucune dépendance
