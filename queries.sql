@@ -2,6 +2,10 @@
 -- queries.sql — La Remise
 -- Les 10 questions de Malika, une requete chacune.
 -- A executer apres migration_up.sql puis seed.sql.
+--
+-- Sous chaque requete, le resultat obtenu sur le jeu de donnees de
+-- seed.sql. Les dates du seed etant relatives a CURRENT_DATE, les
+-- chiffres restent stables ; seules les dates absolues glissent.
 -- ============================================================
 
 
@@ -20,6 +24,11 @@ FROM objet o
 JOIN depot d USING (id_depot)
 WHERE d.date_depot >= date_trunc('month', CURRENT_DATE) - INTERVAL '1 month'
   AND d.date_depot <  date_trunc('month', CURRENT_DATE);
+
+-- REPONSE (execution du 18/08/2026, mois de juillet) :
+--  nb_objets | poids_kg
+-- -----------+----------
+--         23 |   116.22
 
 
 -- ------------------------------------------------------------
@@ -40,6 +49,17 @@ JOIN categorie c USING (id_categorie)
 WHERE o.statut = 'en_rayon'
 ORDER BY jours_en_rayon DESC;
 
+-- REPONSE : 12 objets en rayon, de 8 a 240 jours. Extrait :
+--  etiquette |       designation        |   categorie    | prix_affiche | jours_en_rayon
+-- -----------+--------------------------+----------------+--------------+----------------
+--  ET-0026   | Etabli metal             | bricolage      |        90.00 |            240
+--  ET-0024   | Collection Larousse 1978 | livres         |        30.00 |            230
+--  ET-0025   | Rideaux velours vert     | textile        |        18.00 |            210
+--  ET-0022   | Armoire normande         | mobilier       |       150.00 |            205
+--  ET-0023   | Television cathodique    | electromenager |        15.00 |            200
+--  ...
+--  ET-0015   | Buffet chene 2 portes    | mobilier       |        80.00 |              8
+
 
 -- ------------------------------------------------------------
 -- 3. Quelle categorie se vend le mieux ? Laquelle rapporte le plus ?
@@ -58,6 +78,18 @@ WHERE o.statut = 'vendu'
 GROUP BY c.libelle
 ORDER BY nb_vendus DESC, chiffre_affaires DESC;
 
+-- REPONSE : le mobilier gagne sur les deux tableaux (volume ET valeur).
+--    categorie    | nb_vendus | chiffre_affaires
+-- ----------------+-----------+------------------
+--  mobilier       |         4 |           125.00
+--  electromenager |         3 |            72.00
+--  vaisselle      |         2 |            22.00
+--  jouets         |         1 |            30.00
+--  bricolage      |         1 |            28.00
+--  livres         |         1 |            20.00
+--  luminaire      |         1 |            15.00
+--  textile        |         1 |            12.00
+
 
 -- ------------------------------------------------------------
 -- 4. Heures de benevolat en reparation cette annee ?
@@ -70,6 +102,12 @@ SELECT
     SUM(duree_heures) AS heures_totales
 FROM reparation
 WHERE date_reparation >= date_trunc('year', CURRENT_DATE);
+
+-- REPONSE :
+--  nb_reparations | heures_totales
+-- ----------------+----------------
+--              14 |          46.50
+-- La 15e reparation date de decembre 2025 : hors annee civile.
 
 
 -- ------------------------------------------------------------
@@ -92,6 +130,17 @@ JOIN personne p ON p.id_personne = r.id_benevole
 GROUP BY p.id_personne, p.prenom, p.nom
 ORDER BY taux_pct DESC;
 
+-- REPONSE 5a :
+--       benevole      | nb_reparations | reussies | taux_pct
+--  --------------------+----------------+----------+----------
+--  Claire Fontaine    |              2 |        2 |    100.0
+--  Jean-Pierre Moreau |              4 |        4 |    100.0
+--  Karim Benali       |              1 |        1 |    100.0
+--  Thi Lan Nguyen     |              1 |        1 |    100.0
+--  Yves Marchand      |              1 |        1 |    100.0
+--  Marco Rossi        |              3 |        2 |     66.7
+--  Aminata Diallo     |              3 |        2 |     66.7
+
 -- 5b. Global
 SELECT
     COUNT(*)                                     AS nb_reparations,
@@ -99,6 +148,11 @@ SELECT
     ROUND(100.0 * COUNT(*) FILTER (WHERE resultat = 'reussie') / COUNT(*), 1)
                                                  AS taux_pct
 FROM reparation;
+
+-- REPONSE 5b :
+--  nb_reparations | reussies | taux_pct
+-- ----------------+----------+----------
+--              15 |       13 |     86.7
 
 
 -- ------------------------------------------------------------
@@ -119,6 +173,12 @@ GROUP BY p.id_personne, p.prenom, p.nom, p.telephone
 HAVING COUNT(*) > 3
 ORDER BY nb_depots DESC;
 
+-- REPONSE : deux donateurs reguliers.
+--  prenom |  nom   |   telephone    | nb_depots
+-- --------+--------+----------------+-----------
+--  Thomas | Leroy  | 06 44 55 66 77 |         4
+--  Helene | Dupont | 06 33 44 55 66 |         4
+
 
 -- ------------------------------------------------------------
 -- 7. Poids total detourne de la dechetterie ?
@@ -132,6 +192,12 @@ SELECT
     ROUND(SUM(poids_g) / 1000000.0, 3)    AS poids_tonnes
 FROM objet
 WHERE statut <> 'recycle';
+
+-- REPONSE : LE chiffre pour la mairie.
+--  nb_objets | poids_tonnes
+-- -----------+--------------
+--         34 |        0.329
+-- 34 objets sur 40 : 6 seulement sont partis au recyclage.
 
 
 -- ------------------------------------------------------------
@@ -154,6 +220,14 @@ JOIN atelier a USING (id_atelier)
 GROUP BY a.id_atelier, a.intitule, a.nb_places
 ORDER BY taux_pct DESC;
 
+-- REPONSE 8a :
+--            intitule           | places | inscrits | presents | taux_pct
+-- ------------------------------+--------+----------+----------+----------
+--  Retaper un meuble            |      5 |        4 |        3 |     75.0
+--  Depannage electrique de base |     10 |        6 |        4 |     66.7
+--  Repare ton velo              |      8 |        6 |        4 |     66.7
+--  Initiation couture           |      6 |        5 |        3 |     60.0
+
 -- 8b. Global
 SELECT
     COUNT(*)                            AS inscrits,
@@ -161,6 +235,11 @@ SELECT
     ROUND(100.0 * COUNT(*) FILTER (WHERE est_present) / COUNT(*), 1)
                                         AS taux_pct
 FROM inscription;
+
+-- REPONSE 8b : un inscrit sur trois ne vient pas.
+--  inscrits | presents | taux_pct
+-- ----------+----------+----------
+--        21 |       14 |     66.7
 
 
 -- ------------------------------------------------------------
@@ -189,6 +268,14 @@ WHERE c.libelle = 'electricite'
   )
 ORDER BY b.date_entree;
 
+-- REPONSE : 4 benevoles mobilisables.
+--  prenom  |   nom    |   telephone    | date_entree
+-- ---------+----------+----------------+-------------
+--  Aminata | Diallo   | 06 45 67 89 01 | 2021-06-08
+--  Marco   | Rossi    | 06 67 89 01 23 | 2022-02-14
+--  Karim   | Benali   | 06 89 01 23 45 | 2023-01-09
+--  Yves    | Marchand | 06 22 33 44 55 | 2023-09-18
+
 
 -- ------------------------------------------------------------
 -- 10. Objets en rayon depuis plus de six mois ?
@@ -208,3 +295,12 @@ JOIN categorie c USING (id_categorie)
 WHERE o.statut = 'en_rayon'
   AND o.date_mise_en_rayon < CURRENT_DATE - INTERVAL '6 months'
 ORDER BY jours_en_rayon DESC;
+
+-- REPONSE : 5 objets a sortir du rayon.
+--  etiquette |       designation        |   categorie    | prix_affiche | jours_en_rayon
+-- -----------+--------------------------+----------------+--------------+----------------
+--  ET-0026   | Etabli metal             | bricolage      |        90.00 |            240
+--  ET-0024   | Collection Larousse 1978 | livres         |        30.00 |            230
+--  ET-0025   | Rideaux velours vert     | textile        |        18.00 |            210
+--  ET-0022   | Armoire normande         | mobilier       |       150.00 |            205
+--  ET-0023   | Television cathodique    | electromenager |        15.00 |            200
