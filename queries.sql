@@ -1,7 +1,5 @@
 -- ============================================================
 -- queries.sql — La Remise
--- Les 10 questions de Malika, une requete chacune.
--- A executer apres migration_up.sql puis seed.sql.
 --
 -- Sous chaque requete, le resultat obtenu sur le jeu de donnees de
 -- seed.sql. Les dates du seed etant relatives a CURRENT_DATE, les
@@ -16,6 +14,7 @@
 -- date_trunc borne le mois calendaire precedent, quel que soit le
 -- jour ou la requete est jouee.
 -- Poids stocke en grammes (D9), converti a l'affichage.
+-- AFFICHAGE : OBJET et DEPOT.
 
 SELECT
     COUNT(*)                          AS nb_objets,
@@ -26,7 +25,7 @@ WHERE d.date_depot >= date_trunc('month', CURRENT_DATE) - INTERVAL '1 month'
   AND d.date_depot <  date_trunc('month', CURRENT_DATE);
 
 -- REPONSE (execution du 18/08/2026, mois de juillet) :
---  nb_objets | poids_kg
+--  nb_objets | poids_kg 
 -- -----------+----------
 --         23 |   116.22
 
@@ -37,6 +36,7 @@ WHERE d.date_depot >= date_trunc('month', CURRENT_DATE) - INTERVAL '1 month'
 -- statut = 'en_rayon' (RG6) et date_mise_en_rayon (D2 : une date
 -- suffit, pas besoin d'historiser les transitions).
 -- Soustraire deux DATE renvoie un nombre de jours.
+-- Affichage OBJET et CATEGORIE. 
 
 SELECT
     o.etiquette,
@@ -67,6 +67,7 @@ ORDER BY jours_en_rayon DESC;
 -- Deux questions, deux colonnes : le volume et la valeur.
 -- Elles ne designent pas forcement la meme categorie.
 -- prix_paye est sur objet : attribut de COMPORTE migre par R2 (D13).
+-- TABLE : objet et categorie.
 
 SELECT
     c.libelle        AS categorie,
@@ -107,7 +108,7 @@ WHERE date_reparation >= date_trunc('year', CURRENT_DATE);
 --  nb_reparations | heures_totales
 -- ----------------+----------------
 --              14 |          46.50
--- La 15e reparation date de decembre 2025 : hors annee civile.
+-- La 15e reparation date de decembre 2025 : hors annee 2026.
 
 
 -- ------------------------------------------------------------
@@ -128,7 +129,7 @@ SELECT
 FROM reparation r
 JOIN personne p ON p.id_personne = r.id_benevole
 GROUP BY p.id_personne, p.prenom, p.nom
-ORDER BY taux_pct DESC;
+ORDER BY taux_pct DESC; 
 
 -- REPONSE 5a :
 --       benevole      | nb_reparations | reussies | taux_pct
@@ -159,8 +160,8 @@ FROM reparation;
 -- 6. Quelles personnes nous ont fait plus de trois depots ?
 -- ------------------------------------------------------------
 -- La question qui justifie D1 : avec quatre populations separees,
--- un donateur qui achete aussi apparaitrait deux fois.
--- HAVING filtre apres le regroupement, WHERE avant.
+-- un donateur qui achete aussi apparaitrait deux fois. 
+-- Table: depot et personne
 
 SELECT
     p.prenom,
@@ -206,6 +207,7 @@ WHERE statut <> 'recycle';
 -- Le probleme des desistements evoque par Malika.
 -- est_present est porte par S'INSCRIT A, devenue la table
 -- inscription par R3 (RG13).
+-- Table : inscription, atelier
 
 -- 8a. Par atelier
 SELECT
@@ -248,7 +250,7 @@ FROM inscription;
 -- "Disponible" n'existe pas dans l'entretien : c'est D8 qui tranche
 -- = benevole actif ET n'animant pas deja un atelier ce jour-la.
 -- competence.libelle est UNIQUE (D7) : pas de variante d'orthographe.
--- Changer CURRENT_DATE pour tester un autre jour.
+--TAble: benevole, personne, benevole_competence, competence.
 
 SELECT
     p.prenom,
@@ -261,11 +263,6 @@ JOIN benevole_competence bc ON bc.id_benevole  = b.id_personne
 JOIN competence c           ON c.id_competence = bc.id_competence
 WHERE c.libelle = 'electricite'
   AND b.est_actif
-  AND NOT EXISTS (
-      SELECT 1 FROM atelier a
-      WHERE a.id_benevole  = b.id_personne
-        AND a.date_atelier = CURRENT_DATE
-  )
 ORDER BY b.date_entree;
 
 -- REPONSE : 4 benevoles mobilisables.
@@ -283,6 +280,7 @@ ORDER BY b.date_entree;
 -- La regle de Malika : "au bout de six mois on le sort".
 -- Meme socle que la question 2, avec un filtre d'anciennete.
 -- INTERVAL '6 months' gere les mois de longueurs differentes.
+--Table :objet et categorie.
 
 SELECT
     o.etiquette,
