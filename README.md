@@ -30,6 +30,8 @@ queries.sql     les 10 questions, commentées, avec leurs résultats
 
 ## Le modèle
 
+![Schéma entité-association](conception/schema-ea.png)
+
 11 tables, créées dans cet ordre :
 
 1. `personne`, `categorie`, `competence`
